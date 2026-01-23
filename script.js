@@ -311,14 +311,23 @@ function showModal(text) {
 function terminalUnlock(text) {
   appendTerminalBanner(text);
   appendTerminalLine("processing...");
+
   const bar = document.createElement("div");
   bar.className = "progress-bar";
   bar.innerHTML = `<div class="progress-fill"></div>`;
   terminalBody.appendChild(bar);
 
+  // Start the bar animation
+  const fill = bar.querySelector(".progress-fill");
+  fill.style.width = "0%";
   setTimeout(() => {
-    bar.querySelector(".progress-fill").style.width = "100%";
+    fill.style.width = "100%";
   }, 50);
+
+  // After bar finishes, print completion message
+  setTimeout(() => {
+    appendTerminalLine("process complete");
+  }, 1300);
 }
 
 // --------------------------------------------------
