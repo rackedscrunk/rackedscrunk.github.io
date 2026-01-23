@@ -87,12 +87,6 @@ function handleCommand(cmdRaw) {
   appendTerminalLine("  decrypt     - fake decryption sequence");
   appendTerminalLine("  fortune     - random cyberpunk quote");
   appendTerminalLine("  glitch      - visual distortion");
-  appendTerminalLine("  bruteforce  - engage bruteforce module");
-  appendTerminalLine("  rfid        - unlock RFID module");
-  appendTerminalLine("  nfc         - emulate NFC tag");
-  appendTerminalLine("  badusb      - arm BadUSB payload");
-  appendTerminalLine("  jam         - activate signal jammer");
-  appendTerminalLine("  freq        - scan frequencies");
   break;
 
     case "clear":
@@ -111,7 +105,7 @@ function handleCommand(cmdRaw) {
       flashDanger();
       break;
 
-          case "sysinfo":
+             case "sysinfo":
       appendTerminalLine("system: ctOS node v3.9");
       appendTerminalLine("kernel: ghostline-OS 1.14");
       appendTerminalLine("cpu: quantum-lite 4‑core @ 6.1ghz");
@@ -122,16 +116,19 @@ function handleCommand(cmdRaw) {
 
     case "uptime":
       appendTerminalLine("node uptime: " + Math.floor(rand(1200, 99999)) + " seconds");
+      appendLogLine("uptime checked");
       break;
 
     case "whoami":
       appendTerminalLine("identity: anonymous operator");
       appendTerminalLine("access level: ghost‑tier");
+      appendLogLine("identity queried");
       break;
 
     case "motd":
       appendTerminalLine("message of the day:");
       appendTerminalLine("  stay unseen. stay free.");
+      appendLogLine("motd displayed");
       break;
 
     case "netstat":
@@ -144,6 +141,7 @@ function handleCommand(cmdRaw) {
 
     case "spoof":
       appendTerminalLine("spoofing MAC address...");
+      appendLogLine("MAC spoof initiated");
       terminalUnlock("MAC SPOOFED");
       break;
 
@@ -152,10 +150,12 @@ function handleCommand(cmdRaw) {
       appendTerminalLine("response: " + Math.floor(rand(12, 120)) + "ms");
       appendTerminalLine("response: " + Math.floor(rand(12, 120)) + "ms");
       appendTerminalLine("response: " + Math.floor(rand(12, 120)) + "ms");
+      appendLogLine("ping executed");
       break;
 
     case "decrypt":
       appendTerminalLine("starting decryption...");
+      appendLogLine("decryption module started");
       terminalUnlock("DECRYPTION COMPLETE");
       break;
 
@@ -168,19 +168,22 @@ function handleCommand(cmdRaw) {
         "the quietest node is the deadliest."
       ];
       appendTerminalLine(fortunes[Math.floor(Math.random() * fortunes.length)]);
+      appendLogLine("fortune generated");
       break;
 
     case "glitch":
       flashDanger();
       appendTerminalLine("visual distortion injected.");
+      appendLogLine("glitch effect triggered");
       break;
 
     case "clearlog":
       logBody.innerHTML = "";
       appendTerminalLine("event log cleared.");
+      appendLogLine("log cleared by operator");
       break;
 
-          case "dedsec":
+    case "dedsec":
     case "wake up":
     case "who is tyler":
       flashDanger();
@@ -189,6 +192,7 @@ function handleCommand(cmdRaw) {
       appendTerminalLine("the node remembers.");
       appendLogLine("unauthorized identity handshake detected");
       break;
+
 
 
     default:
