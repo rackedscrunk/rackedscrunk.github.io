@@ -14,15 +14,6 @@ function timestamp() {
     ":" +
     String(now.getSeconds()).padStart(2, "0")
   );
-
-function fakeLocalIP() {
-  // 50% chance of 192.168.x.x, 50% chance of 10.0.x.x
-  if (Math.random() > 0.5) {
-    return `192.168.${Math.floor(rand(0, 255))}.${Math.floor(rand(2, 254))}`;
-  } else {
-    return `10.0.${Math.floor(rand(0, 255))}.${Math.floor(rand(2, 254))}`;
-  }
-}
   
 }
 
@@ -140,10 +131,8 @@ function handleCommand(cmdRaw) {
       break;
 
     case "netstat":
-  const localIP = fakeLocalIP();
-
   appendTerminalLine("active connections:");
-  appendTerminalLine(`  ${localIP}:8080  ->  localhost`);
+  appendTerminalLine(`  ???.???.?.??.???  ->  localhost`);
   appendTerminalLine("  10.0.0.12:443   ->  ctOS uplink");
   appendTerminalLine("  192.168.0.5:22  ->  ghostshell");
   appendLogLine(`netstat executed (local IP ${localIP})`);
