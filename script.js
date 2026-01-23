@@ -14,6 +14,16 @@ function timestamp() {
     ":" +
     String(now.getSeconds()).padStart(2, "0")
   );
+
+function fakeLocalIP() {
+  // 50% chance of 192.168.x.x, 50% chance of 10.0.x.x
+  if (Math.random() > 0.5) {
+    return `192.168.${Math.floor(rand(0, 255))}.${Math.floor(rand(2, 254))}`;
+  } else {
+    return `10.0.${Math.floor(rand(0, 255))}.${Math.floor(rand(2, 254))}`;
+  }
+}
+  
 }
 
 // --------------------------------------------------
@@ -72,7 +82,7 @@ function handleCommand(cmdRaw) {
   switch (cmd) {
     case "help":
   appendTerminalLine("available commands:");
-  appendTerminalLine("  help        - show this help");
+  appendTerminalLine("  help        - shows commands");
   appendTerminalLine("  clear       - clear terminal output");
   appendTerminalLine("  clearlog    - clear event log");
   appendTerminalLine("  scan        - scan network grid");
@@ -85,8 +95,6 @@ function handleCommand(cmdRaw) {
   appendTerminalLine("  spoof       - spoof MAC address");
   appendTerminalLine("  ping        - simulate ping");
   appendTerminalLine("  decrypt     - fake decryption sequence");
-  appendTerminalLine("  fortune     - random cyberpunk quote");
-  appendTerminalLine("  glitch      - visual distortion");
   break;
 
     case "clear":
@@ -95,7 +103,7 @@ function handleCommand(cmdRaw) {
 
     case "scan":
       appendTerminalLine("initiating passive scan...");
-      appendLogLine("network scan requested by operator");
+      appendLogLine("network scan requested by user");
       randomizeNodes();
       break;
 
@@ -107,10 +115,10 @@ function handleCommand(cmdRaw) {
 
              case "sysinfo":
       appendTerminalLine("system: ctOS node v3.9");
-      appendTerminalLine("kernel: ghostline-OS 1.14");
+      appendTerminalLine("kernel: CENTRAL-OS 1.14");
       appendTerminalLine("cpu: quantum-lite 4‑core @ 6.1ghz");
       appendTerminalLine("memory: 8192mb virtual");
-      appendTerminalLine("gpu: phantom‑render 2.0");
+      appendTerminalLine("gpu: ???? 2.0");
       appendLogLine("system info requested");
       break;
 
@@ -120,8 +128,8 @@ function handleCommand(cmdRaw) {
       break;
 
     case "whoami":
-      appendTerminalLine("identity: anonymous operator");
-      appendTerminalLine("access level: ghost‑tier");
+      appendTerminalLine("identity: ???");
+      appendTerminalLine("access level: BLUME-ADMIN");
       appendLogLine("identity queried");
       break;
 
@@ -132,12 +140,14 @@ function handleCommand(cmdRaw) {
       break;
 
     case "netstat":
-      appendTerminalLine("active connections:");
-      appendTerminalLine("  127.0.0.1:8080  ->  localhost");
-      appendTerminalLine("  10.0.0.12:443   ->  ctOS uplink");
-      appendTerminalLine("  192.168.0.5:22  ->  ghostshell");
-      appendLogLine("netstat executed");
-      break;
+  const localIP = fakeLocalIP();
+
+  appendTerminalLine("active connections:");
+  appendTerminalLine(`  ${localIP}:8080  ->  localhost`);
+  appendTerminalLine("  10.0.0.12:443   ->  ctOS uplink");
+  appendTerminalLine("  192.168.0.5:22  ->  ghostshell");
+  appendLogLine(`netstat executed (local IP ${localIP})`);
+  break;
 
     case "spoof":
       appendTerminalLine("spoofing MAC address...");
@@ -163,7 +173,6 @@ function handleCommand(cmdRaw) {
       const fortunes = [
         "the system watches those who watch it.",
         "every lock has a key. every key has a flaw.",
-        "ghosts leave no logs.",
         "trust no signal.",
         "the quietest node is the deadliest."
       ];
