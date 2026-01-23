@@ -71,12 +71,29 @@ function handleCommand(cmdRaw) {
 
   switch (cmd) {
     case "help":
-      appendTerminalLine("available commands:");
-      appendTerminalLine("  help  - show this help");
-      appendTerminalLine("  scan  - scan network grid");
-      appendTerminalLine("  trace - simulate trace event");
-      appendTerminalLine("  clear - clear terminal output");
-      break;
+  appendTerminalLine("available commands:");
+  appendTerminalLine("  help        - show this help");
+  appendTerminalLine("  clear       - clear terminal output");
+  appendTerminalLine("  clearlog    - clear event log");
+  appendTerminalLine("  scan        - scan network grid");
+  appendTerminalLine("  trace       - simulate trace event");
+  appendTerminalLine("  sysinfo     - system information dump");
+  appendTerminalLine("  uptime      - show node uptime");
+  appendTerminalLine("  whoami      - display operator identity");
+  appendTerminalLine("  motd        - message of the day");
+  appendTerminalLine("  netstat     - list active connections");
+  appendTerminalLine("  spoof       - spoof MAC address");
+  appendTerminalLine("  ping        - simulate ping");
+  appendTerminalLine("  decrypt     - fake decryption sequence");
+  appendTerminalLine("  fortune     - random cyberpunk quote");
+  appendTerminalLine("  glitch      - visual distortion");
+  appendTerminalLine("  bruteforce  - engage bruteforce module");
+  appendTerminalLine("  rfid        - unlock RFID module");
+  appendTerminalLine("  nfc         - emulate NFC tag");
+  appendTerminalLine("  badusb      - arm BadUSB payload");
+  appendTerminalLine("  jam         - activate signal jammer");
+  appendTerminalLine("  freq        - scan frequencies");
+  break;
 
     case "clear":
       terminalBody.innerHTML = "";
@@ -93,6 +110,86 @@ function handleCommand(cmdRaw) {
       appendLogLine("trace event simulated");
       flashDanger();
       break;
+
+          case "sysinfo":
+      appendTerminalLine("system: ctOS node v3.9");
+      appendTerminalLine("kernel: ghostline-OS 1.14");
+      appendTerminalLine("cpu: quantum-lite 4‑core @ 6.1ghz");
+      appendTerminalLine("memory: 8192mb virtual");
+      appendTerminalLine("gpu: phantom‑render 2.0");
+      appendLogLine("system info requested");
+      break;
+
+    case "uptime":
+      appendTerminalLine("node uptime: " + Math.floor(rand(1200, 99999)) + " seconds");
+      break;
+
+    case "whoami":
+      appendTerminalLine("identity: anonymous operator");
+      appendTerminalLine("access level: ghost‑tier");
+      break;
+
+    case "motd":
+      appendTerminalLine("message of the day:");
+      appendTerminalLine("  stay unseen. stay free.");
+      break;
+
+    case "netstat":
+      appendTerminalLine("active connections:");
+      appendTerminalLine("  127.0.0.1:8080  ->  localhost");
+      appendTerminalLine("  10.0.0.12:443   ->  ctOS uplink");
+      appendTerminalLine("  192.168.0.5:22  ->  ghostshell");
+      appendLogLine("netstat executed");
+      break;
+
+    case "spoof":
+      appendTerminalLine("spoofing MAC address...");
+      terminalUnlock("MAC SPOOFED");
+      break;
+
+    case "ping":
+      appendTerminalLine("pinging ctOS uplink...");
+      appendTerminalLine("response: " + Math.floor(rand(12, 120)) + "ms");
+      appendTerminalLine("response: " + Math.floor(rand(12, 120)) + "ms");
+      appendTerminalLine("response: " + Math.floor(rand(12, 120)) + "ms");
+      break;
+
+    case "decrypt":
+      appendTerminalLine("starting decryption...");
+      terminalUnlock("DECRYPTION COMPLETE");
+      break;
+
+    case "fortune":
+      const fortunes = [
+        "the system watches those who watch it.",
+        "every lock has a key. every key has a flaw.",
+        "ghosts leave no logs.",
+        "trust no signal.",
+        "the quietest node is the deadliest."
+      ];
+      appendTerminalLine(fortunes[Math.floor(Math.random() * fortunes.length)]);
+      break;
+
+    case "glitch":
+      flashDanger();
+      appendTerminalLine("visual distortion injected.");
+      break;
+
+    case "clearlog":
+      logBody.innerHTML = "";
+      appendTerminalLine("event log cleared.");
+      break;
+
+          case "dedsec":
+    case "wake up":
+    case "who is tyler":
+      flashDanger();
+      appendTerminalBanner(">>> WAKE UP, TYLER <<<");
+      appendTerminalLine("the system sees you.");
+      appendTerminalLine("the node remembers.");
+      appendLogLine("unauthorized identity handshake detected");
+      break;
+
 
     default:
       appendTerminalLine(`unknown command: ${cmd}`);
