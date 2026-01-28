@@ -32,22 +32,26 @@ function render() {
 }
 
 /* --------------------------------------------------
-   FIX 1: LONGER, FULL-WIDTH HACKER LINES
+   KEY-BY-KEY HACKERTYPER MODE
 -------------------------------------------------- */
-function randomChunk() {
-  const line = hackerLines[Math.floor(Math.random() * hackerLines.length)];
 
-  // Repeat the line to ensure it's long enough
-  const extended = (line + " ").repeat(20);
+// Build one giant hacker text stream
+const hackerStream = hackerLines.join(" ") + " ";
+let index = 0;
 
-  // Random length between 30–60 chars
-  const length = Math.floor(Math.random() * 30) + 30;
+// Return ONE character at a time
+function typeNextChar() {
+  const char = hackerStream[index];
+  index++;
 
-  return extended.slice(0, length) + "\n";
+  // Loop when reaching the end
+  if (index >= hackerStream.length) index = 0;
+
+  return char;
 }
 
 /* --------------------------------------------------
-   FIX 2: KEY BLACKLIST + ALLOW BROWSER SHORTCUTS
+   KEY BLACKLIST + SHORTCUT WHITELIST
 -------------------------------------------------- */
 
 // Keys that should NOT trigger hacker typing
@@ -84,8 +88,8 @@ document.addEventListener("keydown", (e) => {
   // Prevent actual typing
   e.preventDefault();
 
-  // Add random hacker text
-  addText(randomChunk());
+  // Add ONE character
+  addText(typeNextChar());
 });
 
 // Initial render
