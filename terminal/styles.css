@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* --------------------------------------------------
+   VARIABLES — ORANGE CYBERPUNK
+-------------------------------------------------- */
+:root {
+  --bg: #0a0500;
+  --accent: #ff8c00;
+  --accent-soft: rgba(255, 140, 0, 0.25);
+  --text-main: #ffe9c7;
+  --text-dim: #b07a3f;
+  --scan-line: rgba(255, 255, 255, 0.04);
+  --noise: rgba(255, 255, 255, 0.03);
+
+  --font-mono: "JetBrains Mono", monospace;
+  --font-pixel: "Press Start 2P", monospace;
+}
+
+/* --------------------------------------------------
+   BASE
+-------------------------------------------------- */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: radial-gradient(circle at top, #1a0d00 0, #0a0500 55%, #000 100%);
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+/* --------------------------------------------------
+   CRT EFFECTS
+-------------------------------------------------- */
+.scan-lines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    var(--scan-line) 3px
+  );
+  background-size: 100% 3px;
+  opacity: 0.4;
+  z-index: 5;
+}
+
+.noise {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background-image: repeating-radial-gradient(
+    circle at 0 0,
+    var(--noise),
+    var(--noise) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  opacity: 0.25;
+  animation: noiseMove 1.5s steps(4) infinite;
+  z-index: 4;
+}
+
+@keyframes noiseMove {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-10px, 5px); }
+  50% { transform: translate(5px, -10px); }
+  75% { transform: translate(-5px, 10px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* --------------------------------------------------
+   TERMINAL LAYOUT
+-------------------------------------------------- */
+.terminal-wrapper {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-title {
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+  letter-spacing: 0.15em;
+}
+
+.terminal-screen {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.55);
+  border: 2px solid var(--accent-soft);
+  padding: 14px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  text-shadow: 0 0 4px var(--accent-soft);
+  box-shadow: 0 0 12px rgba(255, 140, 0, 0.2);
+}
+
+/* Cursor */
+.cursor {
+  display: inline-block;
+  width: 10px;
+  background: var(--accent);
+  animation: blink 0.8s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
