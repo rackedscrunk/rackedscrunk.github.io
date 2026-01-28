@@ -31,20 +31,56 @@ function render() {
   screen.scrollTop = screen.scrollHeight;
 }
 
+/* --------------------------------------------------
+   FIX 1: LONGER, FULL-WIDTH HACKER LINES
+-------------------------------------------------- */
 function randomChunk() {
   const line = hackerLines[Math.floor(Math.random() * hackerLines.length)];
 
-  // Generate a longer slice (20–40 chars)
-  const length = Math.floor(Math.random() * 20) + 20;
+  // Repeat the line to ensure it's long enough
+  const extended = (line + " ").repeat(20);
 
-  // If the line is shorter, repeat it to fill space
-  const extended = (line + " ").repeat(10);
+  // Random length between 30–60 chars
+  const length = Math.floor(Math.random() * 30) + 30;
 
   return extended.slice(0, length) + "\n";
 }
 
+/* --------------------------------------------------
+   FIX 2: KEY BLACKLIST + ALLOW BROWSER SHORTCUTS
+-------------------------------------------------- */
+
+// Keys that should NOT trigger hacker typing
+const blacklist = [
+  "Shift",
+  "Control",
+  "Alt",
+  "Meta",
+  "CapsLock",
+  "Tab",
+  "Escape",
+  "ArrowUp",
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight"
+];
+
+// Allow browser shortcuts like Ctrl+Shift+R, Ctrl+R, Cmd+R
+function isBrowserShortcut(e) {
+  return (
+    (e.ctrlKey && e.shiftKey) ||   // Ctrl+Shift+anything
+    (e.ctrlKey && e.key === "r") || // Ctrl+R
+    e.metaKey                       // Cmd on Mac
+  );
+}
 
 document.addEventListener("keydown", (e) => {
+  // Allow browser shortcuts
+  if (isBrowserShortcut(e)) return;
+
+  // Ignore blacklisted keys
+  if (blacklist.includes(e.key)) return;
+
   // Prevent actual typing
   e.preventDefault();
 
