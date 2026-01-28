@@ -33,9 +33,16 @@ function render() {
 
 function randomChunk() {
   const line = hackerLines[Math.floor(Math.random() * hackerLines.length)];
-  const length = Math.floor(Math.random() * 10) + 3;
-  return line.slice(0, length) + "\n";
+
+  // Generate a longer slice (20–40 chars)
+  const length = Math.floor(Math.random() * 20) + 20;
+
+  // If the line is shorter, repeat it to fill space
+  const extended = (line + " ").repeat(10);
+
+  return extended.slice(0, length) + "\n";
 }
+
 
 document.addEventListener("keydown", (e) => {
   // Prevent actual typing
